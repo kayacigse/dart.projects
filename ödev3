@@ -1,0 +1,54 @@
+import 'dart:io';
+
+class Student {
+  String? name;
+  String? surname;
+  List<double> notes = [];
+  Student(String a, String b) {
+    name = a;
+    surname = b;
+  }
+  void notEkle(double note) {
+    notes.add(note);
+    print("$note added.");
+  }
+
+  double ortalamaHesapla() {
+    if (notes.isEmpty) {
+      print("no notes added yet.");
+      return 0.0;
+    }
+    double sum = 0;
+    for (var note in notes) {
+      sum += note;
+    }
+    return sum / notes.length;
+  }
+}
+
+void main(List<String> args) {
+  print('please enter student name: ');
+  String name = stdin.readLineSync()!;
+  print('please enter student surname: ');
+  String surname = stdin.readLineSync()!;
+
+  Student student = Student(name, surname);
+
+  while (true) {
+    print("enter the note to add a note (for exit write 'quit'): ");
+    String? input = stdin.readLineSync();
+
+    if (input == 'quit') {
+      break;
+    } else {
+      double? note = double.tryParse(input!);
+      if (note != null) {
+        student.notEkle(note);
+      } else {
+        print("invalid note");
+      }
+    }
+  }
+  double ortalama = student.ortalamaHesapla();
+  print("${student.name} ${student.surname} : $ortalama");
+}
