@@ -1,0 +1,56 @@
+import 'dart:io';
+
+void main(List<String> args) {
+  double num1 = getInputNumber('enter the first number: ');
+  double num2 = getInputNumber('enter second number: ');
+  String? operation = getInputOperation('enter an operation (+, -, *, /): ');
+  double result = calculate(num1, num2, operation!);
+  print('Result: $num1 $operation $num2 = $result\n');
+}
+
+double getInputNumber(String prompt) {
+  while (true) {
+    stdout.write(prompt);
+    String? input = stdin.readLineSync();
+
+    try {
+      return double.parse(input!);
+    } catch (e) {
+      print('Invalid input, please enter a valid number.');
+    }
+  }
+}
+
+String? getInputOperation(String prompt) {
+  while (true) {
+    stdout.write(prompt);
+    String? operation = stdin.readLineSync();
+
+    if (operation == '+' ||
+        operation == '-' ||
+        operation == '*' ||
+        operation == '/') {
+      return operation;
+    }
+    print('Invalid operation, please enter one of +, -, *, /');
+  }
+}
+
+double calculate(double num1, double num2, String operation) {
+  switch (operation) {
+    case '+':
+      return num1 + num2;
+    case '-':
+      return num1 - num2;
+    case '*':
+      return num1 * num2;
+    case '/':
+      if (num2 == 0) {
+        print('Can not divide by zero.');
+        return 0;
+      }
+      return num1 / num2;
+    default:
+      throw Exception('Unknown operation: $operation');
+  }
+}
